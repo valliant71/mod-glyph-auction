@@ -1,6 +1,6 @@
-#ifndef GLYPH_AUCTION_LOADER_H
-#define GLYPH_AUCTION_LOADER_H
+void AddGlyphAuctionHouseScripts();
 
-void AddGlyphAuctionModuleScripts();
-
-#endif // GLYPH_AUCTION_LOADER_H
+   void Addmod_glyph_auctionScripts()
+   {
+       AddGlyphAuctionHouseScripts();
+   }

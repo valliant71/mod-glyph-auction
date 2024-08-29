@@ -7,19 +7,19 @@
 #include <chrono>
 
 class GlyphAuctionHouse : public WorldScript
-{
-public:
-    GlyphAuctionHouse() : WorldScript("GlyphAuctionHouseScript") {}
+   {
+   public:
+       GlyphAuctionHouse() : WorldScript("GlyphAuctionHouseScript") {}
 
-    void OnStartup() override
-    {
-        PopulateAuctionHouse();
-    }
+       void OnStartup() override
+       {
+           PopulateAuctionHouse();
+       }
 
-    void OnConfigLoad(bool reload) override
-    {
-        LoadConfigValues();
-    }
+       void OnConfigLoad(bool reload)  // Removed override keyword
+       {
+           LoadConfigValues();
+       }
 
 private:
     std::vector<uint32> glyphIds = {
