@@ -94,7 +94,7 @@ private:
 
             AuctionEntry* auctionEntry = new AuctionEntry();
             auctionEntry->Id = sObjectMgr->GenerateAuctionID();
-            auctionEntry->itemGUIDLow = item->GetGUIDLow();
+            auctionEntry->item_guid = item->GetGUID().GetCounter(); // Use item_guid instead of itemGUIDLow
             auctionEntry->itemEntry = item->GetEntry();
             auctionEntry->itemCount = quantity;
             auctionEntry->owner = 0;
