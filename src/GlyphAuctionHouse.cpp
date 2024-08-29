@@ -16,10 +16,10 @@ class GlyphAuctionHouse : public WorldScript
            PopulateAuctionHouse();
        }
 
-    void OnConfigLoad(bool reload)
+    void OnConfigLoad(bool /*reload*/)
     {
         LoadConfigValues();
-       }
+    }
 
 private:
     std::vector<uint32> glyphIds = {
@@ -68,10 +68,10 @@ private:
     void LoadConfigValues()
     {
         minQuantity = sConfigMgr->GetOption<int32>("GlyphAH.MinQuantity", 1);
-        maxQuantity = sConfigMgr->GetIntDefault("GlyphAH.MaxQuantity", 5);
-        minPrice = sConfigMgr->GetIntDefault("GlyphAH.MinPrice", 50000);
-        maxPrice = sConfigMgr->GetIntDefault("GlyphAH.MaxPrice", 150000);
-        refreshInterval = sConfigMgr->GetIntDefault("GlyphAH.RefreshInterval", 6);
+        maxQuantity = sConfigMgr->GetOption<int32>("GlyphAH.MaxQuantity", 5);
+        minPrice = sConfigMgr->GetOption<uint32>("GlyphAH.MinPrice", 50000);
+        maxPrice = sConfigMgr->GetOption<uint32>("GlyphAH.MaxPrice", 150000);
+        refreshInterval = sConfigMgr->GetOption<int32>("GlyphAH.RefreshInterval", 6);
     }
 
     void PopulateAuctionHouse()
