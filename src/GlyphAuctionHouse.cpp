@@ -129,10 +129,14 @@ private:
 
     void ScheduleNextRefresh()
     {
-        uint32 nextRefresh = refreshInterval * HOUR * IN_MILLISECONDS;
-        sWorld->AddScheduledTask(nextRefresh, [this]() {
-            PopulateAuctionHouse();
-        });
+        uint32 nextRefresh = refreshInterval * HOUR;
+        GameEventMgr::ActiveEvents const& ae = sGameEventMgr->GetActiveEventList();
+        bool isEventActive = std::find(ae.begin(), ae.end(), GLYPH_AUCTION_REFRESH_EVENT) != ae.end();
+
+        if (!isEventActive)
+        {
+            sGameEventMgr->StartEvent(GLYPH_AUCTION_REFRESH_EVENT, true);
+        }
     }
 };
 
