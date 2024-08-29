@@ -1,0 +1,18 @@
+#
+# GlyphAuction module configuration
+#
+
+# Minimum quantity of glyphs to add
+GlyphAH.MinQuantity = 1
+
+# Maximum quantity of glyphs to add
+GlyphAH.MaxQuantity = 5
+
+# Minimum price for glyphs (in copper)
+GlyphAH.MinPrice = 50000
+
+# Maximum price for glyphs (in copper)
+GlyphAH.MaxPrice = 150000
+
+# Refresh interval in hours
+GlyphAH.RefreshInterval = 6

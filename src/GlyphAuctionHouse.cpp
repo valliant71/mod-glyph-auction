@@ -132,7 +132,7 @@ private:
     }
 };
 
-void AddGlyphAuctionHouseScripts()
+void AddGlyphAuctionModuleScripts()
 {
     new GlyphAuctionHouse();
 }
