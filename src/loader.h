@@ -3,7 +3,8 @@
 
 void AddGlyphAuctionModuleScripts();
 
-void Addmod_glyph_auctionScripts()
+// This function should match the name that the core is trying to call
+void AddGlyphAuctionScripts()
 {
     AddGlyphAuctionModuleScripts();
 }
