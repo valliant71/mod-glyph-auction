@@ -14,6 +14,9 @@ public:
 
 private:
     // Declare your private methods and variables here
+    uint32 _refreshTimer;
+    
+    // ... (other private method declarations)
 };
 
 #endif // GLYPH_AUCTION_HOUSE_H

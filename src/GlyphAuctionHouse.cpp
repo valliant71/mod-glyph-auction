@@ -14,7 +14,7 @@
 class GlyphAuctionHouse : public WorldScript
 {
 public:
-    GlyphAuctionHouse() : WorldScript("GlyphAuctionHouseScript") {}
+    GlyphAuctionHouse() : WorldScript("GlyphAuctionHouseScript"), _refreshTimer(0) {}
 
     void OnStartup() override
     {
