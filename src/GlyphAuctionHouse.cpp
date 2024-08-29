@@ -7,14 +7,14 @@
 #include <chrono>
 
 class GlyphAuctionHouse : public WorldScript
-   {
-   public:
-       GlyphAuctionHouse() : WorldScript("GlyphAuctionHouseScript") {}
+{
+public:
+    GlyphAuctionHouse() : WorldScript("GlyphAuctionHouseScript") {}
 
-       void OnStartup() override
-       {
-           PopulateAuctionHouse();
-       }
+    void OnStartup() override
+    {
+        PopulateAuctionHouse();
+    }
 
     void OnConfigLoad(bool /*reload*/)
     {
@@ -64,6 +64,7 @@ private:
     uint32 minPrice = 50000;  // 5 gold
     uint32 maxPrice = 150000; // 15 gold
     int refreshInterval = 6;  // hours
+    uint32 auctionDuration = 12 * HOUR; // New member for auction duration
 
     void LoadConfigValues()
     {
@@ -72,6 +73,7 @@ private:
         minPrice = sConfigMgr->GetOption<uint32>("GlyphAH.MinPrice", 50000);
         maxPrice = sConfigMgr->GetOption<uint32>("GlyphAH.MaxPrice", 150000);
         refreshInterval = sConfigMgr->GetOption<int32>("GlyphAH.RefreshInterval", 6);
+        auctionDuration = sConfigMgr->GetOption<uint32>("GlyphAH.AuctionDuration", 12) * HOUR;
     }
 
     void PopulateAuctionHouse()
@@ -88,7 +90,7 @@ private:
             if (!item)
                 continue;
 
-            uint32 etime = sWorld->getIntConfig(CONFIG_AUCTION_TIME_MIN) * HOUR;
+            uint32 etime = auctionDuration; // Use the configurable auction duration
 
             AuctionEntry* auctionEntry = new AuctionEntry();
             auctionEntry->Id = sObjectMgr->GenerateAuctionID();
