@@ -16,9 +16,9 @@ class GlyphAuctionHouse : public WorldScript
            PopulateAuctionHouse();
        }
 
-       void OnConfigLoad(bool reload)  // Removed override keyword
-       {
-           LoadConfigValues();
+    void OnConfigLoad(bool reload) override
+    {
+        LoadConfigValues();
        }
 
 private:
@@ -67,7 +67,7 @@ private:
 
     void LoadConfigValues()
     {
-        minQuantity = sConfigMgr->GetIntDefault("GlyphAH.MinQuantity", 1);
+        minQuantity = sConfigMgr->GetOption<int32>("GlyphAH.MinQuantity", 1);
         maxQuantity = sConfigMgr->GetIntDefault("GlyphAH.MaxQuantity", 5);
         minPrice = sConfigMgr->GetIntDefault("GlyphAH.MinPrice", 50000);
         maxPrice = sConfigMgr->GetIntDefault("GlyphAH.MaxPrice", 150000);
