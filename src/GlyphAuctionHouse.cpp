@@ -94,10 +94,10 @@ private:
 
             AuctionEntry* auctionEntry = new AuctionEntry();
             auctionEntry->Id = sObjectMgr->GenerateAuctionID();
-            auctionEntry->item_guid = item->GetGUID(); // Use the full ObjectGuid
-            auctionEntry->itemEntry = item->GetEntry();
-            auctionEntry->itemCount = quantity;
-            auctionEntry->owner = ObjectGuid::Empty; // Use ObjectGuid::Empty for no owner
+            auctionEntry->item_guid = item->GetGUID();
+            auctionEntry->item_template = item->GetEntry();
+            auctionEntry->count = quantity;
+            auctionEntry->owner = ObjectGuid::Empty;
             auctionEntry->startbid = price * 0.95;  // Start bid at 95% of buyout
             auctionEntry->buyout = price;
             auctionEntry->expire_time = time(nullptr) + etime;
