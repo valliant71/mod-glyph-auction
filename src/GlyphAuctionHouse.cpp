@@ -78,6 +78,8 @@ private:
 
     void PopulateAuctionHouse()
     {
+        CharacterDatabaseTransaction trans = CharacterDatabase.BeginTransaction();
+
         for (uint32 glyphId : glyphIds)
         {
             int quantity = GenerateRandomNumber(minQuantity, maxQuantity);
@@ -102,11 +104,13 @@ private:
             auctionEntry->deposit = 0;
             auctionEntry->auctionHouseEntry = ahEntry;
 
-            item->SaveToDB();
+            item->SaveToDB(trans);
             sAuctionMgr->AddAItem(item);
             auctionHouse->AddAuction(auctionEntry);
-            auctionEntry->SaveToDB();
+            auctionEntry->SaveToDB(trans);
         }
+
+        CharacterDatabase.CommitTransaction(trans);
 
         ScheduleNextRefresh();
     }
