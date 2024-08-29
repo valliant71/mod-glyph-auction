@@ -16,7 +16,7 @@ class GlyphAuctionHouse : public WorldScript
            PopulateAuctionHouse();
        }
 
-    void OnConfigLoad(bool reload) override
+    void OnConfigLoad(bool reload)
     {
         LoadConfigValues();
        }
