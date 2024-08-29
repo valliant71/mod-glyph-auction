@@ -2,9 +2,14 @@
 #include "Config.h"
 #include "AuctionHouseMgr.h"
 #include "ObjectMgr.h"
+#include "GameEventMgr.h"
+#include "DatabaseEnv.h"
 #include <vector>
 #include <random>
 #include <chrono>
+#include <algorithm>
+
+#define GLYPH_AUCTION_REFRESH_EVENT 1234 // Choose a unique event ID
 
 class GlyphAuctionHouse : public WorldScript
 {
@@ -19,6 +24,16 @@ public:
     void OnConfigLoad(bool /*reload*/)
     {
         LoadConfigValues();
+    }
+
+    static int OnGlyphAuctionRefreshEvent(uint16 eventId, uint32 time, void* data)
+    {
+        if (eventId == GLYPH_AUCTION_REFRESH_EVENT)
+        {
+            static_cast<GlyphAuctionHouse*>(data)->PopulateAuctionHouse();
+            return static_cast<GlyphAuctionHouse*>(data)->refreshInterval * HOUR * IN_MILLISECONDS;
+        }
+        return 0;
     }
 
 private:
@@ -83,7 +98,7 @@ private:
         for (uint32 glyphId : glyphIds)
         {
             int quantity = GenerateRandomNumber(minQuantity, maxQuantity);
-            uint32 price = CalculateGlyphPrice(glyphId);
+            uint32 price = CalculateGlyphPrice();
 
             AuctionHouseObject* auctionHouse = sAuctionMgr->GetAuctionsMap(2);  // 2 is for neutral AH
             AuctionHouseEntry const* ahEntry = sAuctionHouseStore.LookupEntry(2);
@@ -115,7 +130,7 @@ private:
         ScheduleNextRefresh();
     }
 
-    uint32 CalculateGlyphPrice(uint32 glyphId)
+    uint32 CalculateGlyphPrice()
     {
         return GenerateRandomNumber(minPrice, maxPrice);
     }
@@ -129,7 +144,6 @@ private:
 
     void ScheduleNextRefresh()
     {
-        uint32 nextRefresh = refreshInterval * HOUR;
         GameEventMgr::ActiveEvents const& ae = sGameEventMgr->GetActiveEventList();
         bool isEventActive = std::find(ae.begin(), ae.end(), GLYPH_AUCTION_REFRESH_EVENT) != ae.end();
 
@@ -142,5 +156,6 @@ private:
 
 void AddGlyphAuctionModuleScripts()
 {
-    new GlyphAuctionHouse();
+    GlyphAuctionHouse* glyphAH = new GlyphAuctionHouse();
+    sGameEventMgr->AddEvent(glyphAH, &GlyphAuctionHouse::OnGlyphAuctionRefreshEvent, GLYPH_AUCTION_REFRESH_EVENT, 0, 0, 0, glyphAH);
 }
