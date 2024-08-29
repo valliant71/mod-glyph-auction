@@ -37,6 +37,7 @@ public:
     }
 
 private:
+    uint32 _refreshTimer;
     std::vector<uint32> glyphIds = {
         // Combined Glyph IDs
         43533, 43534, 43535, 43536, 43537, 43538, 43539, 43541, 43542, 43543,

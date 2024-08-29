@@ -13,10 +13,12 @@ public:
     void OnUpdate(uint32 diff) override;
 
 private:
-    // Declare your private methods and variables here
-    uint32 _refreshTimer;
-    
-    // ... (other private method declarations)
+    // Declare your private methods here
+    void LoadConfigValues();
+    void PopulateAuctionHouse();
+    uint32 CalculateGlyphPrice();
+    int GenerateRandomNumber(int min, int max);
+    void ScheduleNextRefresh();
 };
 
 #endif // GLYPH_AUCTION_HOUSE_H
