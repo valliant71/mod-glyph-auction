@@ -26,14 +26,14 @@ public:
         LoadConfigValues();
     }
 
-    static int OnGlyphAuctionRefreshEvent(uint16 eventId, uint32 time, void* data)
+    void OnUpdate(uint32 diff) override
     {
-        if (eventId == GLYPH_AUCTION_REFRESH_EVENT)
+        _refreshTimer += diff;
+        if (_refreshTimer >= refreshInterval * HOUR * IN_MILLISECONDS)
         {
-            static_cast<GlyphAuctionHouse*>(data)->PopulateAuctionHouse();
-            return static_cast<GlyphAuctionHouse*>(data)->refreshInterval * HOUR * IN_MILLISECONDS;
+            PopulateAuctionHouse();
+            _refreshTimer = 0;
         }
-        return 0;
     }
 
 private:
@@ -144,18 +144,11 @@ private:
 
     void ScheduleNextRefresh()
     {
-        GameEventMgr::ActiveEvents const& ae = sGameEventMgr->GetActiveEventList();
-        bool isEventActive = std::find(ae.begin(), ae.end(), GLYPH_AUCTION_REFRESH_EVENT) != ae.end();
-
-        if (!isEventActive)
-        {
-            sGameEventMgr->StartEvent(GLYPH_AUCTION_REFRESH_EVENT, true);
-        }
+        // This method is no longer needed, as we're using OnUpdate for periodic refresh
     }
 };
 
 void AddGlyphAuctionModuleScripts()
 {
-    GlyphAuctionHouse* glyphAH = new GlyphAuctionHouse();
-    sGameEventMgr->AddEvent(glyphAH, &GlyphAuctionHouse::OnGlyphAuctionRefreshEvent, GLYPH_AUCTION_REFRESH_EVENT, 0, 0, 0, glyphAH);
+    new GlyphAuctionHouse();
 }

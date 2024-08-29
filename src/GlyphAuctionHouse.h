@@ -10,6 +10,7 @@ public:
 
     void OnStartup() override;
     void OnConfigLoad(bool reload) override;
+    void OnUpdate(uint32 diff) override;
 
 private:
     // Declare your private methods and variables here
